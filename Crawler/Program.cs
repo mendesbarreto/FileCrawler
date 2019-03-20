@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FileCrawler.Core;
 
 namespace FileCrawler
@@ -9,12 +10,14 @@ namespace FileCrawler
     {
         static void Main(string[] args)
         {
-            var searchPatternFactory = new SearchPatternFactory(new[] {"INIT"});
-            var directoryExists = Directory.Exists("X:/Svc");
-            var directoryExists2 = Directory.Exists(@"X:\Svc");
+            var searchPatternFactory = new SearchPatternFactory(new[] {"INI"});
             var filesFinder = new FilesFinder(@"X:\Svc\SCOPC-PRODPC\FERME04\PROD\PROD_PC\ini", searchPatternFactory);
+            var filesFound = filesFinder.GetFiles();
+            foreach (var fileInfo in filesFound)
+            {
+                Console.WriteLine($"Name: {fileInfo.Name} path: {fileInfo.FullName} ");
+            }
 
-            Console.Write(filesFinder.GetFiles());
             Console.ReadLine();
             Console.WriteLine("Hello World!");
         }
