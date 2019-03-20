@@ -10,9 +10,10 @@ namespace FileCrawler
     {
         static void Main(string[] args)
         {
-            var searchPatternFactory = new SearchPatternFactory(new[] {"INI"});
-            var filesFinder = new FilesFinder(@"X:\Svc\SCOPC-PRODPC\FERME04\PROD\PROD_PC\ini", searchPatternFactory);
+            var searchPatternFactory = new ExtensionSearchPatternFactory(new[] {"INI"});
+            var filesFinder = new LocalFilesFinder(@"X:\Svc\SCOPC-PRODPC\FERME04\PROD\PROD_PC\ini", searchPatternFactory);
             var filesFound = filesFinder.GetFiles();
+
             foreach (var fileInfo in filesFound)
             {
                 Console.WriteLine($"Name: {fileInfo.Name} path: {fileInfo.FullName} ");

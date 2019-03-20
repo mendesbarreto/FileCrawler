@@ -9,11 +9,11 @@ namespace FileCrawler.Core
         string MakeSearchByExtension();
     }
 
-    public class SearchPatternFactory: ISearchPatternFactory
+    public class ExtensionSearchPatternFactory: ISearchPatternFactory
     {
         private readonly IEnumerable<string> _fileExtensions;
 
-        public SearchPatternFactory(IEnumerable<string> fileExtensions)
+        public ExtensionSearchPatternFactory(IEnumerable<string> fileExtensions)
         {
             _fileExtensions = fileExtensions;
         }

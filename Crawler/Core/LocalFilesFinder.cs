@@ -8,12 +8,12 @@ namespace FileCrawler.Core
         IEnumerable<FileInfo> GetFiles();
     }
 
-    public class FilesFinder: IFilesFinder
+    public class LocalFilesFinder: IFilesFinder
     {
         private readonly string _rootDirectory;
         private readonly ISearchPatternFactory _searchPatternFactory;
 
-        public FilesFinder(string rootDirectory, ISearchPatternFactory searchPatternFactory)
+        public LocalFilesFinder(string rootDirectory, ISearchPatternFactory searchPatternFactory)
         {
             _rootDirectory = rootDirectory;
             _searchPatternFactory = searchPatternFactory;
