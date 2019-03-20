@@ -11,10 +11,12 @@ namespace FileCrawler.Core
     public class FileCrawler: ICrawler
     {
         private readonly IFilesFinder _filesFinder;
+        private readonly IParser _parser;
 
-        public FileCrawler(IFilesFinder filesFinder)
+        public FileCrawler(IFilesFinder filesFinder, IParser parser)
         {
             _filesFinder = filesFinder;
+            _parser = parser;
         }
 
         public void Craw()
@@ -35,7 +37,7 @@ namespace FileCrawler.Core
                     // TODO: Inject the comparison string by param
                     if (line.Contains("A24130.ISC"))
                     {
-                        Console.WriteLine($"{fileInfo.Name}: {line}");
+                        _parser.parse(fileInfo.Name, line);
                     }
                 }
             }
