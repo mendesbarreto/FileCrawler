@@ -12,11 +12,13 @@ namespace FileCrawler.Core
     {
         private readonly IFilesFinder _filesFinder;
         private readonly IParser _parser;
-        
-        public FileCrawler(IFilesFinder filesFinder, IParser parser)
+        private readonly IStringMatcher _matcher;
+
+        public FileCrawler(IFilesFinder filesFinder, IParser parser, IStringMatcher matcher)
         {
             _filesFinder = filesFinder;
             _parser = parser;
+            _matcher = matcher;
         }
 
         public void Craw()
@@ -29,13 +31,12 @@ namespace FileCrawler.Core
 
         private void Read(FileInfo fileInfo)
         {
+            string line;
             using (var streamReader = new StreamReader(fileInfo.FullName))
             {
-                string line;
                 while ((line = streamReader.ReadLine()) != null)
                 {
-                    // TODO: Inject the comparison string by param
-                    if (line.Contains("A24130.ISC"))
+                    if (_matcher.Match(line))
                     {
                         _parser.parse(fileInfo.Name, line);
                     }

@@ -14,8 +14,11 @@ namespace FileCrawler
             var searchPatternFactory = new ExtensionSearchPatternFactory(new[] {"INI"});
             var filesFinder = new LocalFilesFinder(config.RootPath, searchPatternFactory);
             var consoleParser = new ConsoleParser();
-            ICrawler crawler = new Core.FileCrawler(filesFinder, consoleParser);
+            var searchPatternMatcher = new SearchPatternMatcher(config.SearchPatterns);
+
+            ICrawler crawler = new Core.FileCrawler(filesFinder, consoleParser, searchPatternMatcher);
             crawler.Craw();
+
             Console.ReadLine();
             Console.WriteLine("Hello World!");
         }
