@@ -14,10 +14,10 @@ namespace FileCrawler.Core
         public Config Load()
         {
             Config config;
+            var deserializer = new Deserializer(namingConvention: new CamelCaseNamingConvention());
 
             using (var input = new StreamReader(YamlPath))
             {
-                var deserializer = new Deserializer(namingConvention: new CamelCaseNamingConvention());
                 config = deserializer.Deserialize<Config>(input);
             }
 

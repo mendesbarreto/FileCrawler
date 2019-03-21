@@ -13,14 +13,14 @@ namespace FileCrawler
             var config = new ConfigLoader().Load();
             var searchPatternFactory = new ExtensionSearchPatternFactory(config.Extensions);
             var filesFinder = new LocalFilesFinder(config.RootPath, searchPatternFactory);
-            var consoleParser = new ConsoleParser();
+            var parser = new CVSParser(config.OutputName);
             var searchPatternMatcher = new SearchPatternMatcher(config.SearchPatterns);
 
-            ICrawler crawler = new Core.FileCrawler(filesFinder, consoleParser, searchPatternMatcher);
+            ICrawler crawler = new Core.FileCrawler(filesFinder, parser, searchPatternMatcher);
             crawler.Craw();
-
+            parser.WriteFile();
+            Console.WriteLine("Completed!");
             Console.ReadLine();
-            Console.WriteLine("Hello World!");
         }
     }
 }

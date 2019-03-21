@@ -4,4 +4,4 @@ searchPatterns:
   - A24130.IC
 extensions:
   - INI
-output: XSL
+outputName: prod-pc.csv
