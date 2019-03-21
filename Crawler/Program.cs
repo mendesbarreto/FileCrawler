@@ -17,9 +17,12 @@ namespace FileCrawler
             var searchPatternMatcher = new SearchPatternMatcher(config.SearchPatterns);
 
             ICrawler crawler = new Core.FileCrawler(filesFinder, parser, searchPatternMatcher);
+
             crawler.Craw();
             parser.WriteFile();
+
             Console.WriteLine("Completed!");
+
             Console.ReadLine();
         }
     }

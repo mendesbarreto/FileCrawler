@@ -1,4 +1,5 @@
-﻿rootPath: X:\Svc\SCOPC-PRODPC\FERME04\PROD\PROD_PC\ini
+﻿#rootPath: X:\Svc\SCOPC-PRODPC\FERME04\PROD\PROD_PC\ini
+rootPath: C:\Users\LI26GX\Desktop\Ini
 searchPatterns:
   - A24130.ISC
   - A24130.IC

@@ -1,5 +1,6 @@
 using System.IO;
 using CsvHelper;
+using CsvHelper.Configuration;
 using FileCrawler.Core.Model;
 
 namespace FileCrawler.Core
@@ -7,15 +8,27 @@ namespace FileCrawler.Core
     public class CVSParser: IParser
     {
         private readonly string _fileName;
-        private StreamWriter _fileStream;
-        private CsvWriter _csvHelper;
-
-        public CVSParser(string fileName)
+        private readonly IContentStringCleaner _cleaner;
+        private readonly StreamWriter _fileStream;
+        private readonly CsvWriter _csvHelper;
+        private readonly Configuration _configuration;
+        public CVSParser(string fileName, IContentStringCleaner cleaner)
         {
             _fileName = fileName;
+            _cleaner = cleaner;
+            _configuration = new Configuration();
+
+            SetupCsvFile();
+
             _fileStream = new StreamWriter(_fileName);
-            _csvHelper = new CsvWriter(_fileStream);
+            _csvHelper = new CsvWriter(_fileStream, _configuration);
+
             CreateHeader();
+        }
+
+        private void SetupCsvFile()
+        {
+            _configuration.Delimiter = ";";
         }
 
         private void CreateHeader()
@@ -32,7 +45,7 @@ namespace FileCrawler.Core
             _csvHelper.WriteField($"{name}",true);
             _csvHelper.WriteField($"{content}",true);
             _csvHelper.WriteField($"{extension}",true);
-            _csvHelper.WriteField($"{path}",true);
+            //_csvHelper.WriteField($"{path}",true);
             _csvHelper.NextRecord();
         }
 
