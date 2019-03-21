@@ -7,6 +7,7 @@ namespace FileCrawler.Core
     public interface ISearchPatternFactory
     {
         string MakeSearchByExtension();
+        IEnumerable<string> MakeStringExtensions();
     }
 
     public class ExtensionSearchPatternFactory: ISearchPatternFactory
@@ -20,8 +21,12 @@ namespace FileCrawler.Core
 
         public string MakeSearchByExtension()
         {
-            var patternByExtension = _fileExtensions.Select(extension => $"*.{extension}");
-            return string.Join(",", patternByExtension);
+            return string.Join(",", MakeStringExtensions());
+        }
+
+        public IEnumerable<string> MakeStringExtensions()
+        {
+            return _fileExtensions.Select(extension => $"*.{extension}");
         }
     }
 }

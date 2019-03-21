@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,11 +28,17 @@ namespace FileCrawler.Core
         private IEnumerable<string> GetFilesNames()
         {
             var rootDirectory = _rootDirectory;
-            var stringPattern = _searchPatternFactory.MakeSearchByExtension();
-            
-            return Directory.EnumerateFiles(rootDirectory,
-                                            stringPattern,
-                                            SearchOption.AllDirectories);
+            var stringPatterns = _searchPatternFactory.MakeStringExtensions();
+            IEnumerable<string> files = new List<string>();
+
+            foreach (var stringPattern in stringPatterns)
+            {
+                files = files.Concat(Directory.EnumerateFiles(rootDirectory,
+                                                             stringPattern,
+                                                             SearchOption.AllDirectories));
+            }
+
+            return files;
         }
 
     }

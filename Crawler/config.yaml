@@ -4,4 +4,4 @@ searchPatterns:
   - A24130.IC
 extensions:
   - INI
-  - JSON
+output: XSL

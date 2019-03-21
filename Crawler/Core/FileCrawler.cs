@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using FileCrawler.Core.Model;
 
 namespace FileCrawler.Core
 {
@@ -25,11 +26,11 @@ namespace FileCrawler.Core
         {
             foreach (var fileInfo in _filesFinder.GetFiles())
             {
-                Read(fileInfo);
+                Parse(fileInfo);
             }
         }
 
-        private void Read(FileInfo fileInfo)
+        private void Parse(FileInfo fileInfo)
         {
             string line;
             using (var streamReader = new StreamReader(fileInfo.FullName))
@@ -38,7 +39,15 @@ namespace FileCrawler.Core
                 {
                     if (_matcher.Match(line))
                     {
-                        _parser.parse(fileInfo.Name, line);
+                        var result = new CrawlerResult()
+                        {
+                                FileName = fileInfo.Name,
+                                Extension = fileInfo.Extension,
+                                MatchContent = line,
+                                Path = fileInfo.FullName
+                        };
+
+                        _parser.parse(result);
                     }
                 }
             }

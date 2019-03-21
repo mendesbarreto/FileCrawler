@@ -1,7 +1,9 @@
+using FileCrawler.Core.Model;
+
 namespace FileCrawler.Core
 {
     public interface IParser
     {
-        void parse(string fileName, string lineContent);
+        void parse(CrawlerResult fileName);
     }
 }

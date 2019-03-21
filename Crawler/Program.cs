@@ -11,7 +11,7 @@ namespace FileCrawler
         static void Main(string[] args)
         {
             var config = new ConfigLoader().Load();
-            var searchPatternFactory = new ExtensionSearchPatternFactory(new[] {"INI"});
+            var searchPatternFactory = new ExtensionSearchPatternFactory(config.Extensions);
             var filesFinder = new LocalFilesFinder(config.RootPath, searchPatternFactory);
             var consoleParser = new ConsoleParser();
             var searchPatternMatcher = new SearchPatternMatcher(config.SearchPatterns);
