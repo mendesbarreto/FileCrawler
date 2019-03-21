@@ -10,8 +10,9 @@ namespace FileCrawler
     {
         static void Main(string[] args)
         {
+            var config = new ConfigLoader().Load();
             var searchPatternFactory = new ExtensionSearchPatternFactory(new[] {"INI"});
-            var filesFinder = new LocalFilesFinder(@"X:\Svc\SCOPC-PRODPC\FERME04\PROD\PROD_PC\ini", searchPatternFactory);
+            var filesFinder = new LocalFilesFinder(config.RootPath, searchPatternFactory);
             var consoleParser = new ConsoleParser();
             ICrawler crawler = new Core.FileCrawler(filesFinder, consoleParser);
             crawler.Craw();

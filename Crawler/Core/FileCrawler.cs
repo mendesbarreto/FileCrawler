@@ -12,7 +12,7 @@ namespace FileCrawler.Core
     {
         private readonly IFilesFinder _filesFinder;
         private readonly IParser _parser;
-
+        
         public FileCrawler(IFilesFinder filesFinder, IParser parser)
         {
             _filesFinder = filesFinder;
