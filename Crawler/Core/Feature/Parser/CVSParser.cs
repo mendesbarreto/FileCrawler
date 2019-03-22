@@ -1,6 +1,7 @@
 using System.IO;
 using CsvHelper;
 using CsvHelper.Configuration;
+using FileCrawler.Core.Feature.StringCleaner;
 using FileCrawler.Core.Model;
 
 namespace FileCrawler.Core
@@ -37,7 +38,8 @@ namespace FileCrawler.Core
         }
         public void parse(CrawlerResult result)
         {
-            Record(result.FileName, result.MatchContent, result.Extension, result.Path);
+            var stringContent = _cleaner.clean(result.MatchContent);
+            Record(result.FileName, stringContent, result.Extension, result.Path);
         }
 
         private void Record(string name, string content, string extension, string path)

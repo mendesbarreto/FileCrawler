@@ -4,14 +4,24 @@ namespace FileCrawler.Core.Feature.StringCleaner
     {
         public string clean(string value)
         {
-            return "";
+            var cleanedString = RemovesVariableFromString(value);
+            cleanedString = RemoveStringParentheses(cleanedString);
+
+            return cleanedString;
+        }
+
+        private string RemoveStringParentheses(string value)
+        {
+            var splitedString = value.Split("(");
+            return splitedString[0];
         }
 
 
-        private string RemovesVariableFromString()
+        private string RemovesVariableFromString(string value)
         {
             var splitedString = value.Split("=");
-            return splitedString[1];
+            if(splitedString.Length > 1) return splitedString[1];
+            return value;
         }
     }
 }

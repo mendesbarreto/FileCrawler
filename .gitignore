@@ -1,4 +1,7 @@
 
+#Ignore CSV files
+*.csv
+
 # Created by https://www.gitignore.io/api/git,macos,linux,windows,jetbrains,visualstudio,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=git,macos,linux,windows,jetbrains,visualstudio,visualstudiocode
 
