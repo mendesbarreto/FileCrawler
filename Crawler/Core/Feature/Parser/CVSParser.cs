@@ -1,4 +1,8 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using CsvHelper;
 using CsvHelper.Configuration;
 using FileCrawler.Core.Feature.StringCleaner;
@@ -13,8 +17,12 @@ namespace FileCrawler.Core
         private readonly StreamWriter _fileStream;
         private readonly CsvWriter _csvHelper;
         private readonly Configuration _configuration;
+
+        private List<CrawlerResult> _resultList;
+
         public CVSParser(string fileName, IContentStringCleaner cleaner)
         {
+            _resultList = new List<CrawlerResult>();
             _fileName = fileName;
             _cleaner = cleaner;
             _configuration = new Configuration();
@@ -30,6 +38,7 @@ namespace FileCrawler.Core
         private void SetupCsvFile()
         {
             _configuration.Delimiter = ";";
+            _configuration.BufferSize = 2048;
         }
 
         private void CreateHeader()
@@ -38,9 +47,13 @@ namespace FileCrawler.Core
         }
         public void parse(CrawlerResult result)
         {
-            var stringContent = _cleaner.clean(result.MatchContent);
-            var systemCode = GetCodeSystem(value: stringContent);
-            Record(result.FileName, stringContent, result.Extension, result.Path, systemCode);
+            _resultList.Add(CleanResult(result));
+        }
+
+        private CrawlerResult CleanResult(CrawlerResult result)
+        {
+            result.MatchContent = _cleaner.clean(result.MatchContent);
+            return result;
         }
 
         private void Record(string name, string content, string extension, string path, string systemCode)
@@ -55,27 +68,49 @@ namespace FileCrawler.Core
 
         public void WriteFile()
         {
+            WriteListOnFile();
             _csvHelper.Flush();
             _fileStream.Close();
         }
 
+        private void WriteListOnFile()
+        {
+            var cleanedList = RemoveDuplicatedData();
+            string stringContent;
+            string systemCode;
+            foreach (var result in cleanedList)
+            {
+                systemCode = GetCodeSystem(value: result.MatchContent);
+                Record(result.FileName, result.MatchContent, result.Extension, result.Path, systemCode);
+            }
+        }
+
+        private IEnumerable<CrawlerResult> RemoveDuplicatedData()
+        {
+            Console.WriteLine("Removing Duplicated data");
+
+            return _resultList.GroupBy(result => new CrawlerResult()
+            {
+                    FileName = result.FileName,
+                    MatchContent = result.MatchContent,
+                    Extension = result.Extension,
+                    Path = result.Path
+
+            }).Select( group => group.Key );
+        }
+
         private string GetCodeSystem(string value)
         {
-            var splittedString = value.Split(".");
+            const string prefix = "A24130.";
+            var indexOfValue = value.IndexOf(prefix);
+            var stringIndex = indexOfValue + ( prefix.Length );
 
-            if(splittedString.Length > 1)
+            if (indexOfValue >= 0)
             {
-                var jobNameString = splittedString[1];
-                string codeSystem;
-                if( jobNameString.Length < 8 )
-                    codeSystem = jobNameString.Substring(0, 2);
-                else
-                    codeSystem = jobNameString.Substring(1, 2);
-
-                return codeSystem;
+                return value.Substring(stringIndex, 3);
             }
 
-            return "Not Defined";
+            return "System code no found";
         }
     }
 }

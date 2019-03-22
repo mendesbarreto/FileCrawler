@@ -38,7 +38,7 @@ namespace FileCrawler.Core
             {
                 indexCount++;
                 processPercent = (indexCount * 100) / filesFoundCount;
-                Console.Write("\r{0}", $"Parsing file: {indexCount} of: {filesFoundCount} | Progress: {processPercent}%");
+                Console.Write("\r{0}", $"Parsing file: {indexCount} of: {filesFoundCount} | Progress: {processPercent}% | file: {fileInfo.Name} | pattern: { _matcher.Patterns.First() }");
                 Parse(fileInfo);
             }
 

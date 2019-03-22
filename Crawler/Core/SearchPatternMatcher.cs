@@ -5,20 +5,20 @@ namespace FileCrawler.Core
 {
     public class SearchPatternMatcher: IStringMatcher
     {
-        private readonly IEnumerable<string> _patterns;
+        public IEnumerable<string> Patterns { get; private set; }
 
         public SearchPatternMatcher(IEnumerable<string> patterns)
         {
-            _patterns = patterns;
+            Patterns = patterns;
         }
 
         public bool Match(string value)
         {
             var hasStringValue = false;
 
-            foreach (var pattern in _patterns)
+            foreach (var pattern in Patterns)
             {
-                if (!value.Contains(pattern) || !value.Any() ) continue;
+                if ( !value.Contains(pattern) || !value.Any()) continue;
                 hasStringValue = true;
             }
 

@@ -28,11 +28,13 @@ namespace FileCrawler.Core
         private IEnumerable<string> GetFilesNames()
         {
             var rootDirectory = _rootDirectory;
-            var stringPatterns = _searchPatternFactory.MakeStringExtensions();
+            var stringPatterns = _searchPatternFactory.MakeStringByNameAndExtensions();
             IEnumerable<string> files = new List<string>();
+
 
             foreach (var stringPattern in stringPatterns)
             {
+                Console.WriteLine($"Trying to find files with the pattern: {stringPattern}");
                 files = files.Concat(Directory.EnumerateFiles(rootDirectory,
                                                              stringPattern,
                                                              SearchOption.AllDirectories));
