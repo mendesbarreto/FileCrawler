@@ -3,7 +3,6 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using FileCrawler.Core.Feature.StringCleaner;
 using FileCrawler.Core.Model;
-using YamlDotNet.Core.Tokens;
 
 namespace FileCrawler.Core
 {
