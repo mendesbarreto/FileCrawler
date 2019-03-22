@@ -2,7 +2,7 @@
 #rootPath: C:\Users\LI26GX\Desktop\Ini
 searchPatterns:
   - A24130.ISC
-  - A24130.IC
+  - A24130.SC
 extensions:
   - INI
 outputName: prod-pc.csv
