@@ -12,10 +12,10 @@ namespace FileCrawler
         static void Main(string[] args)
         {
             var config = new ConfigLoader().Load();
-            var searchPatternFactory = new FileNameAndExtensionSearchPatternFactory(config.FileNamePatterns);
+            var searchPatternFactory = new FileNameAndExtensionSearchPatternFactory(config.FileNamePattern);
             var filesFinder = new LocalFilesFinder(config.RootPath, searchPatternFactory);
             var parser = new CVSParser(config.OutputName, new StringIniCleaner());
-            var searchPatternMatcher = new SearchPatternMatcher(config.SearchPatterns);
+            var searchPatternMatcher = new SCFileSearchPatternMatcher(config.SearchPatterns);
 
             ICrawler crawler = new Core.FileCrawler(filesFinder, parser, searchPatternMatcher);
 

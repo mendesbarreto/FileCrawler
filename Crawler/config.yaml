@@ -1,8 +1,11 @@
 ﻿#rootPath: X:\Svc\SCOPC-PRODPC\FERME04\PROD\PROD_PC\ini
 #rootPath: C:\Users\LI26GX\Desktop\Ini
 rootPath: C:\Users\LI26GX\Desktop\Adabas
-fileNamePatterns:
-  - "SC"
+fileNamePattern:
+  names:
+    - "SC"
+  excludeds:
+    - ""
 searchPatterns:
   - "A24130."
-outputName: jcl-proc.csv
+outputName: jcl-proc-sc.csv

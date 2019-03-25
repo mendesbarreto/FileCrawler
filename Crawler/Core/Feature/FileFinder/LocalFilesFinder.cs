@@ -28,11 +28,12 @@ namespace FileCrawler.Core
         private IEnumerable<string> GetFilesNames()
         {
             var rootDirectory = _rootDirectory;
-            var stringPatterns = _searchPatternFactory.MakeStringByNameAndExtensions();
+            var stringByNameAndExtensions = _searchPatternFactory.MakeStringByNameAndExtensions();
+            var excludeFilesNames = _searchPatternFactory.MakeStringByExcludedFiles();
+
             IEnumerable<string> files = new List<string>();
 
-
-            foreach (var stringPattern in stringPatterns)
+            foreach (var stringPattern in stringByNameAndExtensions)
             {
                 Console.WriteLine($"Trying to find files with the pattern: {stringPattern}");
                 files = files.Concat(Directory.EnumerateFiles(rootDirectory,
@@ -40,6 +41,22 @@ namespace FileCrawler.Core
                                                              SearchOption.AllDirectories));
             }
 
+            files = files.Where(fileName =>
+            {
+                var isExcludedFile = false;
+
+                foreach (var excludeFilesName in excludeFilesNames)
+                {
+                    if(!excludeFilesName.Any() || !fileName.Contains(excludeFilesName)) continue;
+                    isExcludedFile = true;
+                }
+
+                //Console.WriteLine($"File name {fileName} exclude: {isExcludedFile}");
+
+                return !isExcludedFile;
+            });
+
+            //Console.WriteLine();
             return files;
         }
 

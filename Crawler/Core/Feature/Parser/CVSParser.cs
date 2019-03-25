@@ -7,6 +7,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using FileCrawler.Core.Feature.StringCleaner;
 using FileCrawler.Core.Model;
+using YamlDotNet.Core.Tokens;
 
 namespace FileCrawler.Core
 {
@@ -43,7 +44,7 @@ namespace FileCrawler.Core
 
         private void CreateHeader()
         {
-            Record("File Name", "Line Found", "Extension", "Full Path", "System Code");
+            Record("File Name", "Line Found", "Extension", "Full Path", "System Code", "Some");
         }
         public void parse(CrawlerResult result)
         {
@@ -56,12 +57,13 @@ namespace FileCrawler.Core
             return result;
         }
 
-        private void Record(string name, string content, string extension, string path, string systemCode)
+        private void Record(string name, string content, string extension, string path, string systemCode, string someThing)
         {
             _csvHelper.WriteField($"{name}",true);
             _csvHelper.WriteField($"{content}",true);
             _csvHelper.WriteField($"{extension}",true);
             _csvHelper.WriteField($"{systemCode}",true);
+            _csvHelper.WriteField($"{someThing}",true);
             //_csvHelper.WriteField($"{path}",true);
             _csvHelper.NextRecord();
         }
@@ -78,11 +80,23 @@ namespace FileCrawler.Core
             var cleanedList = RemoveDuplicatedData();
             string stringContent;
             string systemCode;
+            string someData;
             foreach (var result in cleanedList)
             {
+                someData = GetSomeData(result.FileName);
                 systemCode = GetCodeSystem(value: result.MatchContent);
-                Record(result.FileName, result.MatchContent, result.Extension, result.Path, systemCode);
+                Record(result.FileName, result.MatchContent, result.Extension, result.Path, systemCode, someData);
             }
+        }
+
+        private string GetSomeData(string value)
+        {
+            var indexOf = value.IndexOf("(");
+            var startIndex = indexOf + 2;
+            var someDataPlacesCount = 2;
+            if (indexOf < 0 || value.Length < indexOf + someDataPlacesCount) return value;
+
+            return value.Substring(startIndex, someDataPlacesCount);
         }
 
         private IEnumerable<CrawlerResult> RemoveDuplicatedData()
