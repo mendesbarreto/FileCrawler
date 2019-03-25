@@ -58,9 +58,7 @@ namespace FileCrawler.Core
                     if(!excludeFilesName.Any() || !fileName.Contains(excludeFilesName)) continue;
                     isExcludedFile = true;
                 }
-
                 //Console.WriteLine($"File name {fileName} exclude: {isExcludedFile}");
-
                 return !isExcludedFile;
             });
         }

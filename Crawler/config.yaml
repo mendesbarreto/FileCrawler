@@ -3,9 +3,9 @@
 rootPath: C:\Users\LI26GX\Desktop\Adabas
 fileNamePattern:
   names:
-    - "SC"
+    -"SC"
   excludeds:
     - ""
-searchPatterns:
-  - "A24130."
-outputName: jcl-proc-sc.csv
+  searchPatterns:
+    - "A24130."
+  outputName: jcl-proc-sc.csv
