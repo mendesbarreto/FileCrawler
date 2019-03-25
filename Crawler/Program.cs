@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using FileCrawler.Core;
+using FileCrawler.Core.Feature.Craw;
+using FileCrawler.Core.Feature.FileFinder;
+using FileCrawler.Core.Feature.Parse;
+using FileCrawler.Core.Feature.Search;
+using FileCrawler.Core.Feature.Setup;
 using FileCrawler.Core.Feature.StringCleaner;
 
 namespace FileCrawler
@@ -17,7 +19,7 @@ namespace FileCrawler
             var parser = new CVSParser(config.OutputName, new StringIniCleaner());
             var searchPatternMatcher = new SCFileSearchPatternMatcher(config.SearchPatterns);
 
-            ICrawler crawler = new Core.FileCrawler(filesFinder, parser, searchPatternMatcher);
+            ICrawler crawler = new Core.Feature.Craw.FileCrawler(filesFinder, parser, searchPatternMatcher);
 
             crawler.Craw();
             parser.WriteFile();

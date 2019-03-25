@@ -3,14 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using FileCrawler.Core.Model;
 
-namespace FileCrawler.Core
+namespace FileCrawler.Core.Feature.Search
 {
-    public interface ISearchPatternFactory
-    {
-        IEnumerable<string> MakeStringByNameAndExtensions();
-        IEnumerable<string> MakeStringByExcludedFiles();
-    }
-
     public class FileNameAndExtensionSearchPatternFactory: ISearchPatternFactory
     {
         private readonly FileNamePattern _fileNamePatterns;

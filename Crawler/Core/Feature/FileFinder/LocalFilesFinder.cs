@@ -2,13 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using FileCrawler.Core.Feature.Search;
 
-namespace FileCrawler.Core
+namespace FileCrawler.Core.Feature.FileFinder
 {
-    public interface IFilesFinder {
-        IEnumerable<FileInfo> GetFiles();
-    }
-
     public class LocalFilesFinder: IFilesFinder
     {
         private readonly string _rootDirectory;

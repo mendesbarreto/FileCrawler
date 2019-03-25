@@ -1,4 +1,4 @@
-namespace FileCrawler.Core
+namespace FileCrawler.Core.Feature.Setup
 {
     public enum OutputFormat
     {

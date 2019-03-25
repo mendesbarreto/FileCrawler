@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace FileCrawler.Core
+namespace FileCrawler.Core.Feature.Search
 {
     public class SCFileSearchPatternMatcher: IStringMatcher
     {
