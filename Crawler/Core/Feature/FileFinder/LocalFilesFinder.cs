@@ -41,11 +41,19 @@ namespace FileCrawler.Core
                                                              SearchOption.AllDirectories));
             }
 
-            files = files.Where(fileName =>
+            files = RemoveExcludedFiles(files, excludeFilesNames);
+
+            return files;
+        }
+
+        private IEnumerable<string> RemoveExcludedFiles(IEnumerable<string> fileNames,
+                                                    IEnumerable<string> fileNameExcludeds)
+        {
+            return fileNames.Where(fileName =>
             {
                 var isExcludedFile = false;
 
-                foreach (var excludeFilesName in excludeFilesNames)
+                foreach (var excludeFilesName in fileNameExcludeds)
                 {
                     if(!excludeFilesName.Any() || !fileName.Contains(excludeFilesName)) continue;
                     isExcludedFile = true;
@@ -55,9 +63,6 @@ namespace FileCrawler.Core
 
                 return !isExcludedFile;
             });
-
-            //Console.WriteLine();
-            return files;
         }
 
     }
