@@ -12,9 +12,9 @@ namespace FileCrawler.Core.Feature.StringCleaner
 //        private Regex _regexGet = new Regex(@"(A24130)(.+\w)\w|(A24130)(.+\w)(?=\()");
 //        private Regex _regexGet = new Regex(@"(A24130)(.+\w(?=[,]))|(A24130)(.+\w)(?=\()");
 //        private Regex _regexGet = new Regex(@"(A24130).*?(?=\()|(A24130).*?(?=[,]+)|(A24130).*?\w(?=[ ])|(A24130)(.+\w)");
-        private Regex _regexGet = new Regex(@"(A24130).*?(?=\()|(A24130).*?(?=[,]+)|(A24130).*?\w(?=[=> ])|(A24130)(.+\w)");
 //        private Regex _regexGet = new Regex(@"(A24130)(.+\w)(?=\()|(A24130)(.+\w)(?=[,]+)|(A24130)(.+\w)\w(?=[ ])|(A24130)(.+\w)");
 //        private Regex _regexGet = new Regex(@"(A24130)(.+\w)");
+        private Regex _regexGet = new Regex(@"(A24130).*?(?=\()|(A24130).*?(?=[,]+)|(A24130).*?\w(?=[=> ])|(A24130)(.+\w)");
 
         public string clean(string value)
         {

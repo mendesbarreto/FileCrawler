@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FileCrawler.Core.Feature.FileFinder;
@@ -24,15 +25,21 @@ namespace FileCrawler.Core.Feature.Craw
         public void Craw()
         {
             var filesFound = _filesFinder.GetFiles();
-            var filesFoundCount = filesFound.ToList().Count;
+            ParseFiles(filesFound);
+        }
+
+        private void ParseFiles(IEnumerable<FileInfo> files)
+        {
             int indexCount = 0;
             int processPercent = 0;
+            var filesFoundCount = files.ToList().Count;
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"We found: { filesFoundCount.ToString() } files");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine();
 
-            foreach (var fileInfo in _filesFinder.GetFiles())
+            foreach (var fileInfo in files)
             {
                 indexCount++;
                 processPercent = (indexCount * 100) / filesFoundCount;
@@ -42,6 +49,7 @@ namespace FileCrawler.Core.Feature.Craw
 
             Console.WriteLine();
             Console.ResetColor();
+
         }
 
         private void Parse(FileInfo fileInfo)
